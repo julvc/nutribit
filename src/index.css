@@ -4,18 +4,25 @@
 }
 
 :root {
+  color-scheme: light dark;
   --pine: #2d6a4f;
   --pine-dark: #1b4332;
+  /* texto verde legible sobre el fondo del tema */
+  --pine-ink: #1b4332;
   --pine-tint: #e6efe9;
   --terra: #c4553b;
   --amber: #d9a441;
   --paper: #f6f4ef;
   --card: #ffffff;
+  --input-bg: #ffffff;
   --ink: #23281f;
   --ink-70: rgba(35, 40, 31, 0.68);
   --ink-45: rgba(35, 40, 31, 0.45);
   --border: #e7e4dc;
   --ring-track: #ecebe5;
+  --glass: rgba(246, 244, 239, 0.85);
+  --glass-tabs: rgba(255, 255, 255, 0.92);
+  --halo: #eaf1ec;
   --radius-card: 20px;
   --radius-input: 12px;
   --shadow-card: 0 1px 2px rgba(35, 40, 31, 0.04), 0 4px 16px rgba(35, 40, 31, 0.06);
@@ -24,9 +31,31 @@
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pine: #3f8a68;
+    --pine-ink: #8fc7aa;
+    --pine-tint: rgba(63, 138, 104, 0.18);
+    --terra: #d4705a;
+    --paper: #151815;
+    --card: #1d211d;
+    --input-bg: #262b26;
+    --ink: #e9e7e0;
+    --ink-70: rgba(233, 231, 224, 0.7);
+    --ink-45: rgba(233, 231, 224, 0.45);
+    --border: #2c312c;
+    --ring-track: #2c312c;
+    --glass: rgba(21, 24, 21, 0.85);
+    --glass-tabs: rgba(29, 33, 29, 0.92);
+    --halo: #1a211c;
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.25);
+    --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.4);
+  }
+}
+
 body {
   font-family: var(--font-body);
-  background: radial-gradient(1200px 600px at 50% -200px, #eaf1ec 0%, var(--paper) 60%);
+  background: radial-gradient(1200px 600px at 50% -200px, var(--halo) 0%, var(--paper) 60%);
   background-attachment: fixed;
   color: var(--ink);
   line-height: 1.5;
@@ -38,6 +67,36 @@ h2,
 h3 {
   font-family: var(--font-display);
   line-height: 1.25;
+}
+
+/* ---- Animación de entrada ---- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.card,
+.date-nav {
+  animation: rise 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+section.card:nth-of-type(2) {
+  animation-delay: 0.05s;
+}
+
+section.card:nth-of-type(3) {
+  animation-delay: 0.1s;
+}
+
+section.card:nth-of-type(4) {
+  animation-delay: 0.15s;
+}
+
+section.card:nth-of-type(5) {
+  animation-delay: 0.2s;
 }
 
 .app {
@@ -57,7 +116,7 @@ h3 {
   justify-content: space-between;
   align-items: center;
   padding: 14px 20px;
-  background: rgba(246, 244, 239, 0.85);
+  background: var(--glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -90,7 +149,7 @@ h3 {
   gap: 4px;
   max-width: 420px;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--glass-tabs);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
@@ -126,7 +185,7 @@ h3 {
 
 .card {
   background: var(--card);
-  border: 1px solid rgba(231, 228, 220, 0.7);
+  border: 1px solid var(--border);
   border-radius: var(--radius-card);
   padding: 18px;
   margin-bottom: 14px;
@@ -332,7 +391,7 @@ h3 {
   height: 36px;
   border-radius: 12px;
   background: var(--pine-tint);
-  color: var(--pine-dark);
+  color: var(--pine-ink);
 }
 
 .meal-list {
@@ -394,7 +453,7 @@ select {
   padding: 10px 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius-input);
-  background: #fff;
+  background: var(--input-bg);
   color: var(--ink);
   width: 100%;
   transition: border-color 0.15s, box-shadow 0.15s;
@@ -420,7 +479,7 @@ button {
   padding: 11px 18px;
   border: none;
   border-radius: 999px;
-  background: linear-gradient(180deg, #35795b 0%, var(--pine) 100%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--pine) 88%, #fff) 0%, var(--pine) 100%);
   color: #fff;
   cursor: pointer;
   transition: filter 0.15s, transform 0.1s;
@@ -446,7 +505,7 @@ button.secondary {
 
 button.link {
   background: none;
-  color: var(--pine-dark);
+  color: var(--pine-ink);
   font-weight: 500;
   padding: 4px;
 }
@@ -468,7 +527,7 @@ button.icon-btn.danger {
 button.icon-btn.add {
   background: var(--pine-tint);
   border: none;
-  color: var(--pine-dark);
+  color: var(--pine-ink);
 }
 
 button.full-width {
@@ -526,7 +585,7 @@ button.full-width {
 }
 
 .info {
-  color: var(--pine-dark);
+  color: var(--pine-ink);
   margin: 8px 0;
 }
 
@@ -560,7 +619,10 @@ h2 {
 @media (prefers-reduced-motion: reduce) {
   .ring-value,
   .macro-fill,
-  button {
+  button,
+  .card,
+  .date-nav {
     transition: none;
+    animation: none;
   }
 }

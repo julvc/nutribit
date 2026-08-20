@@ -74,11 +74,22 @@ export default function History({ userId }: { userId: string }) {
         <div style={{ width: '100%', height: 260 }}>
           <ResponsiveContainer>
             <BarChart data={days} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="label" tick={{ fontSize: 11 }} interval="preserveStartEnd" />
-              <YAxis tick={{ fontSize: 11 }} />
-              <Tooltip />
-              <Bar dataKey="calories" name="kcal" fill="#2D6A4F" radius={[4, 4, 0, 0]} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+              <XAxis
+                dataKey="label"
+                tick={{ fontSize: 11, fill: 'var(--ink-70)' }}
+                interval="preserveStartEnd"
+              />
+              <YAxis tick={{ fontSize: 11, fill: 'var(--ink-70)' }} />
+              <Tooltip
+                contentStyle={{
+                  background: 'var(--card)',
+                  border: '1px solid var(--border)',
+                  borderRadius: 12,
+                  color: 'var(--ink)',
+                }}
+              />
+              <Bar dataKey="calories" name="kcal" fill="var(--pine)" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

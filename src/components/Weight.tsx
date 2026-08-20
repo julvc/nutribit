@@ -89,11 +89,28 @@ export default function Weight({ userId }: { userId: string }) {
           <div style={{ width: '100%', height: 240 }}>
             <ResponsiveContainer>
               <LineChart data={chartData} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="label" tick={{ fontSize: 11 }} interval="preserveStartEnd" />
-                <YAxis tick={{ fontSize: 11 }} domain={['auto', 'auto']} />
-                <Tooltip />
-                <Line type="monotone" dataKey="weight" name="kg" stroke="#2D6A4F" strokeWidth={2} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                <XAxis
+                  dataKey="label"
+                  tick={{ fontSize: 11, fill: 'var(--ink-70)' }}
+                  interval="preserveStartEnd"
+                />
+                <YAxis tick={{ fontSize: 11, fill: 'var(--ink-70)' }} domain={['auto', 'auto']} />
+                <Tooltip
+                  contentStyle={{
+                    background: 'var(--card)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 12,
+                    color: 'var(--ink)',
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="weight"
+                  name="kg"
+                  stroke="var(--pine)"
+                  strokeWidth={2}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>

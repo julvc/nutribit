@@ -10,6 +10,9 @@ dev-dist/
 .DS_Store
 Thumbs.db
 
+# Config local de Claude Code (agentes/skills del proyecto, no publicar)
+.claude/
+
 # Docs de planificación local (no publicar)
 CLAUDECLI_INSTRUCTIONS.md
 NUTRIBIT_PLAN.md
