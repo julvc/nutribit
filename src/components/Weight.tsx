@@ -10,6 +10,7 @@ import {
 } from 'recharts'
 import { supabase } from '../lib/supabase'
 import { todayLocal, type WeightEntry } from '../types'
+import { IconTrash } from './icons'
 
 export default function Weight({ userId }: { userId: string }) {
   const [entries, setEntries] = useState<WeightEntry[]>([])
@@ -92,7 +93,7 @@ export default function Weight({ userId }: { userId: string }) {
                 <XAxis dataKey="label" tick={{ fontSize: 11 }} interval="preserveStartEnd" />
                 <YAxis tick={{ fontSize: 11 }} domain={['auto', 'auto']} />
                 <Tooltip />
-                <Line type="monotone" dataKey="weight" name="kg" stroke="#4CAF50" strokeWidth={2} />
+                <Line type="monotone" dataKey="weight" name="kg" stroke="#2D6A4F" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -106,8 +107,12 @@ export default function Weight({ userId }: { userId: string }) {
               <strong>{Number(e.weight)} kg</strong>
               <div className="muted small">{e.log_date}</div>
             </div>
-            <button className="small" onClick={() => deleteEntry(e.id)}>
-              🗑️
+            <button
+              className="icon-btn danger"
+              aria-label="Eliminar registro"
+              onClick={() => deleteEntry(e.id)}
+            >
+              <IconTrash width={17} height={17} />
             </button>
           </li>
         ))}
