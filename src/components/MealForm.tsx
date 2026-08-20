@@ -6,17 +6,18 @@ interface Props {
   userId: string
   date: string
   meal?: Meal
+  defaultType?: MealType
   onSaved: () => void
   onCancel: () => void
 }
 
-export default function MealForm({ userId, date, meal, onSaved, onCancel }: Props) {
+export default function MealForm({ userId, date, meal, defaultType, onSaved, onCancel }: Props) {
   const [name, setName] = useState(meal?.name ?? '')
   const [calories, setCalories] = useState(meal ? String(meal.calories) : '')
   const [protein, setProtein] = useState(meal ? String(meal.protein) : '')
   const [carbs, setCarbs] = useState(meal ? String(meal.carbs) : '')
   const [fat, setFat] = useState(meal ? String(meal.fat) : '')
-  const [mealType, setMealType] = useState<MealType>(meal?.meal_type ?? 'breakfast')
+  const [mealType, setMealType] = useState<MealType>(meal?.meal_type ?? defaultType ?? 'breakfast')
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
 
