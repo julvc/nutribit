@@ -2,6 +2,7 @@ import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { cleanup, render, screen } from '@testing-library/react'
 import Auth from './components/Auth'
 import ThemeToggle from './components/ThemeToggle'
+import { parseHits } from './lib/openFoodFacts'
 import { todayLocal } from './types'
 
 // jsdom no implementa matchMedia; ThemeToggle lo necesita.
@@ -52,6 +53,21 @@ describe('ThemeToggle', () => {
     expect(document.documentElement.dataset.theme).toBe('dark')
     expect(localStorage.theme).toBe('dark')
     expect(screen.getByRole('button', { name: 'Cambiar a modo claro' })).toBeDefined()
+  })
+})
+
+describe('parseHits', () => {
+  it('descarta resultados sin nombre o sin energía, y usa 0 para macros faltantes', () => {
+    const result = parseHits([
+      { product_name: 'Arroz', nutriments: { 'energy-kcal_100g': 350, proteins_100g: 7 } },
+      { product_name: 'Agua mineral', nutriments: { 'energy-kcal_100g': 0 } },
+      { nutriments: { 'energy-kcal_100g': 100 } },
+      { product_name: 'Sin datos' },
+    ])
+
+    expect(result).toEqual([
+      { name: 'Arroz', caloriesPer100g: 350, proteinPer100g: 7, carbsPer100g: 0, fatPer100g: 0 },
+    ])
   })
 })
 

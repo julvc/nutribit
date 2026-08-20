@@ -12,6 +12,7 @@ Registra tus comidas, controla tus macros y sigue la evolución de tu peso. Tus 
 - 🎯 **Meta calórica diaria** editable, con barra de progreso
 - 📊 **Historial** de los últimos 14 días con gráfica y promedio
 - ⚖️ **Registro de peso** con gráfica de evolución
+- 🔍 **Búsqueda de alimentos** (Open Food Facts) al agregar una comida — completa kcal/macros automáticamente
 - 🔐 **Autenticación** con email y contraseña (Supabase Auth)
 - 📱 **PWA**: instalable en iOS y Android desde el navegador, sin tiendas
 
@@ -33,6 +34,8 @@ npm run dev                  # http://localhost:5173
 ```
 
 **Base de datos:** ejecutar `supabase/schema.sql` en el SQL Editor de tu proyecto Supabase. En Settings → Data API: habilitar Data API, **desactivar** "Automatically expose new tables" y activar "Automatic RLS".
+
+**Búsqueda de alimentos (opcional):** `supabase functions deploy food-search --no-verify-jwt`. Sin este paso la app funciona igual, solo no aparecen sugerencias al escribir el nombre de una comida.
 
 ```bash
 npm run build     # type-check + build de producción

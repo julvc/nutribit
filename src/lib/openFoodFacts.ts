@@ -11,7 +11,7 @@ export interface FoodResult {
   fatPer100g: number
 }
 
-interface OffHit {
+export interface OffHit {
   product_name?: string
   nutriments?: {
     'energy-kcal_100g'?: number
@@ -21,13 +21,9 @@ interface OffHit {
   }
 }
 
-export async function searchFoods(query: string): Promise<FoodResult[]> {
-  const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/food-search?q=${encodeURIComponent(query)}`
-  const res = await fetch(url)
-  if (!res.ok) throw new Error('Búsqueda no disponible')
-  const data: { hits?: OffHit[] } = await res.json()
-
-  return (data.hits ?? [])
+/** Descarta resultados sin nombre o sin energía (agua, datos incompletos). */
+export function parseHits(hits: OffHit[]): FoodResult[] {
+  return hits
     .filter((h) => h.product_name && h.nutriments?.['energy-kcal_100g'])
     .map((h) => ({
       name: h.product_name!,
@@ -36,4 +32,12 @@ export async function searchFoods(query: string): Promise<FoodResult[]> {
       carbsPer100g: h.nutriments!.carbohydrates_100g ?? 0,
       fatPer100g: h.nutriments!.fat_100g ?? 0,
     }))
+}
+
+export async function searchFoods(query: string): Promise<FoodResult[]> {
+  const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/food-search?q=${encodeURIComponent(query)}`
+  const res = await fetch(url)
+  if (!res.ok) throw new Error('Búsqueda no disponible')
+  const data: { hits?: OffHit[] } = await res.json()
+  return parseHits(data.hits ?? [])
 }
