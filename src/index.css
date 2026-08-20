@@ -4,20 +4,40 @@
 }
 
 :root {
-  --green: #4caf50;
-  --green-dark: #388e3c;
-  --bg: #f5f7f5;
-  --text: #1c211c;
-  --muted: #6b746b;
+  --pine: #2d6a4f;
+  --pine-dark: #1b4332;
+  --pine-tint: #e6efe9;
+  --terra: #c4553b;
+  --terra-tint: #f7e7e2;
+  --butter-tint: #f5edda;
+  --clay-tint: #f3e6e0;
+  --paper: #f7f5f0;
   --card: #ffffff;
-  --border: #e0e5e0;
+  --ink: #23281f;
+  --ink-70: rgba(35, 40, 31, 0.7);
+  --ink-45: rgba(35, 40, 31, 0.45);
+  --border: #e5e2da;
+  --radius-card: 16px;
+  --radius-input: 12px;
+  --shadow-card: 0 1px 3px rgba(35, 40, 31, 0.08);
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.big-number {
+  font-family: var(--font-display);
+  line-height: 1.25;
 }
 
 .app {
@@ -26,24 +46,34 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  padding-bottom: calc(68px + env(safe-area-inset-bottom));
 }
 
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  padding: 14px 16px;
 }
 
-.app-header h1 {
-  font-size: 1.25rem;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .app-main {
   flex: 1;
   padding: 0 16px 16px;
 }
+
+/* ---- Navegación inferior ---- */
 
 .tabs {
   position: fixed;
@@ -60,25 +90,34 @@ body {
 
 .tabs button {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
   background: none;
   border: none;
-  padding: 12px 4px;
-  font-size: 0.85rem;
-  color: var(--muted);
+  border-radius: 0;
+  padding: 10px 4px 8px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--ink-45);
   cursor: pointer;
 }
 
 .tabs button.active {
-  color: var(--green-dark);
+  color: var(--pine-dark);
   font-weight: 600;
 }
+
+/* ---- Tarjetas ---- */
 
 .card {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-card);
   padding: 16px;
   margin-bottom: 12px;
+  box-shadow: var(--shadow-card);
 }
 
 .centered {
@@ -94,6 +133,8 @@ body {
   padding: 16px;
 }
 
+/* ---- Formularios ---- */
+
 .auth-form {
   width: 100%;
   max-width: 360px;
@@ -101,6 +142,17 @@ body {
   flex-direction: column;
   gap: 12px;
   text-align: center;
+  padding: 28px 24px;
+}
+
+.auth-brand {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-form h1 {
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
 }
 
 .auth-form label,
@@ -110,27 +162,37 @@ body {
   flex-direction: column;
   gap: 4px;
   text-align: left;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 500;
 }
 
 input,
 select {
   font: inherit;
-  padding: 10px;
+  padding: 10px 12px;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-input);
   background: #fff;
+  color: var(--ink);
   width: 100%;
 }
+
+input:focus-visible,
+select:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--pine);
+  outline-offset: 2px;
+}
+
+/* ---- Botones ---- */
 
 button {
   font: inherit;
   font-weight: 600;
-  padding: 10px 16px;
+  padding: 10px 18px;
   border: none;
-  border-radius: 8px;
-  background: var(--green);
+  border-radius: 999px;
+  background: var(--pine);
   color: #fff;
   cursor: pointer;
 }
@@ -140,26 +202,42 @@ button:disabled {
 }
 
 button.secondary {
-  background: var(--border);
-  color: var(--text);
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--border);
 }
 
 button.link {
   background: none;
-  color: var(--green-dark);
+  color: var(--pine-dark);
   font-weight: 500;
   padding: 4px;
 }
 
-button.small {
-  padding: 6px 10px;
-  background: var(--bg);
+button.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background: var(--paper);
   border: 1px solid var(--border);
+  color: var(--ink-70);
+}
+
+button.icon-btn.danger {
+  color: var(--terra);
 }
 
 button.full-width {
   width: 100%;
   margin-bottom: 12px;
+}
+
+.icon-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .meal-form,
@@ -195,50 +273,78 @@ button.full-width {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   white-space: nowrap;
+  color: var(--ink-70);
 }
 
 .goal-input input {
-  width: 72px;
-  padding: 6px;
+  width: 76px;
+  padding: 6px 8px;
 }
+
+/* ---- Resumen del día (elemento firma) ---- */
 
 .summary {
   text-align: center;
+  padding: 24px 16px;
 }
 
 .big-number {
-  font-size: 2rem;
+  font-size: 2.6rem;
   font-weight: 700;
+  letter-spacing: -0.03em;
 }
 
 .big-number .muted {
+  font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 400;
+  letter-spacing: 0;
 }
 
 .progress {
-  height: 10px;
+  height: 8px;
   background: var(--border);
-  border-radius: 5px;
-  margin: 12px 0;
+  border-radius: 4px;
+  margin: 14px 0;
   overflow: hidden;
 }
 
 .progress-bar {
   height: 100%;
-  border-radius: 5px;
+  border-radius: 4px;
   transition: width 0.3s;
 }
 
 .macros {
   display: flex;
   justify-content: center;
-  gap: 16px;
-  color: var(--muted);
-  font-size: 0.9rem;
+  gap: 8px;
+  flex-wrap: wrap;
 }
+
+.chip {
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 999px;
+  color: var(--ink);
+}
+
+.chip-protein {
+  background: var(--pine-tint);
+}
+
+.chip-carbs {
+  background: var(--butter-tint);
+}
+
+.chip-fat {
+  background: var(--clay-tint);
+}
+
+/* ---- Listas ---- */
 
 .meal-list {
   list-style: none;
@@ -250,10 +356,11 @@ button.full-width {
   justify-content: space-between;
   align-items: center;
   gap: 8px;
+  padding: 12px 16px;
 }
 
 .muted {
-  color: var(--muted);
+  color: var(--ink-70);
 }
 
 .small {
@@ -261,16 +368,23 @@ button.full-width {
 }
 
 .error {
-  color: #c62828;
+  color: var(--terra);
   margin: 8px 0;
 }
 
 .info {
-  color: var(--green-dark);
+  color: var(--pine-dark);
   margin: 8px 0;
 }
 
 h2 {
   font-size: 1.1rem;
   margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar {
+    transition: none;
+  }
 }

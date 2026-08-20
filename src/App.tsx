@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { configOk, supabase } from './lib/supabase'
 import Auth from './components/Auth'
 import Dashboard from './components/Dashboard'
-import History from './components/History'
-import Weight from './components/Weight'
+import { IconBody, IconChart, IconLogout, IconPlate, LogoMark } from './components/icons'
+
+// recharts (~500KB min) solo se descarga al abrir estas pestañas
+const History = lazy(() => import('./components/History'))
+const Weight = lazy(() => import('./components/Weight'))
 
 type Tab = 'hoy' | 'historial' | 'peso'
 
@@ -42,27 +45,32 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>🥗 NutriBit</h1>
-        <button className="link" onClick={() => supabase.auth.signOut()}>
-          Salir
+        <div className="brand">
+          <LogoMark size={30} />
+          <h1>NutriBit</h1>
+        </div>
+        <button className="link icon-label" onClick={() => supabase.auth.signOut()}>
+          <IconLogout width={18} height={18} /> Salir
         </button>
       </header>
 
       <main className="app-main">
-        {tab === 'hoy' && <Dashboard userId={userId} />}
-        {tab === 'historial' && <History userId={userId} />}
-        {tab === 'peso' && <Weight userId={userId} />}
+        <Suspense fallback={<p className="muted centered-text">Cargando…</p>}>
+          {tab === 'hoy' && <Dashboard userId={userId} />}
+          {tab === 'historial' && <History userId={userId} />}
+          {tab === 'peso' && <Weight userId={userId} />}
+        </Suspense>
       </main>
 
       <nav className="tabs">
         <button className={tab === 'hoy' ? 'active' : ''} onClick={() => setTab('hoy')}>
-          🍽️ Hoy
+          <IconPlate /> Hoy
         </button>
         <button className={tab === 'historial' ? 'active' : ''} onClick={() => setTab('historial')}>
-          📊 Historial
+          <IconChart /> Historial
         </button>
         <button className={tab === 'peso' ? 'active' : ''} onClick={() => setTab('peso')}>
-          ⚖️ Peso
+          <IconBody /> Peso
         </button>
       </nav>
     </div>

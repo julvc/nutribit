@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
+import { LogoMark } from './icons'
 
 export default function Auth() {
   const [mode, setMode] = useState<'login' | 'register'>('login')
@@ -31,8 +32,11 @@ export default function Auth() {
   return (
     <div className="centered">
       <form className="card auth-form" onSubmit={handleSubmit}>
-        <h1>🥗 NutriBit</h1>
-        <p className="muted">Tu rastreador de calorías y peso</p>
+        <div className="auth-brand">
+          <LogoMark size={52} />
+        </div>
+        <h1>NutriBit</h1>
+        <p className="muted">Tu registro de calorías y peso</p>
 
         <label>
           Correo

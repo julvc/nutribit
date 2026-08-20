@@ -1,5 +1,11 @@
 -- NutriBit: esquema de base de datos
 -- Ejecutar en Supabase Dashboard -> SQL Editor -> New Query
+--
+-- Configuración recomendada del proyecto (Dashboard -> Settings -> API / Data API):
+--   1. Enable Data API: ON (necesario para supabase-js).
+--   2. Automatically expose new tables: OFF (control manual de qué se expone).
+--   3. Enable automatic RLS: ON en el dashboard, o ejecutar el event trigger
+--      del final de este script, que activa RLS en toda tabla nueva de public.
 
 CREATE TABLE IF NOT EXISTS meals (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -43,3 +49,27 @@ CREATE POLICY "own profile" ON user_profiles FOR ALL
 
 CREATE POLICY "own weight" ON weight_log FOR ALL
   USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+
+-- Automatic RLS: activa Row Level Security en cada tabla nueva del esquema public.
+-- Red de seguridad: una tabla nueva sin políticas queda inaccesible (no expuesta por accidente).
+CREATE OR REPLACE FUNCTION public.enable_rls_on_new_tables()
+RETURNS event_trigger
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  obj RECORD;
+BEGIN
+  FOR obj IN
+    SELECT * FROM pg_event_trigger_ddl_commands()
+    WHERE command_tag = 'CREATE TABLE' AND schema_name = 'public'
+  LOOP
+    EXECUTE format('ALTER TABLE %s ENABLE ROW LEVEL SECURITY', obj.object_identity);
+  END LOOP;
+END;
+$$;
+
+DROP EVENT TRIGGER IF EXISTS enable_rls_trigger;
+CREATE EVENT TRIGGER enable_rls_trigger
+  ON ddl_command_end
+  WHEN TAG IN ('CREATE TABLE')
+  EXECUTE FUNCTION public.enable_rls_on_new_tables();

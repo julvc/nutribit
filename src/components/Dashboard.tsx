@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { MEAL_TYPE_LABELS, todayLocal, type Meal } from '../types'
 import MealForm from './MealForm'
+import { IconPencil, IconPlus, IconTrash } from './icons'
 
 export default function Dashboard({ userId }: { userId: string }) {
   const [date, setDate] = useState(todayLocal())
@@ -83,13 +84,13 @@ export default function Dashboard({ userId }: { userId: string }) {
         <div className="progress">
           <div
             className="progress-bar"
-            style={{ width: `${pct}%`, background: totals.calories > goal ? '#e53935' : '#4CAF50' }}
+            style={{ width: `${pct}%`, background: totals.calories > goal ? 'var(--terra)' : 'var(--pine)' }}
           />
         </div>
         <div className="macros">
-          <span>P: {Math.round(totals.protein)}g</span>
-          <span>C: {Math.round(totals.carbs)}g</span>
-          <span>G: {Math.round(totals.fat)}g</span>
+          <span className="chip chip-protein">Proteína {Math.round(totals.protein)} g</span>
+          <span className="chip chip-carbs">Carbos {Math.round(totals.carbs)} g</span>
+          <span className="chip chip-fat">Grasa {Math.round(totals.fat)} g</span>
         </div>
       </div>
 
@@ -111,8 +112,8 @@ export default function Dashboard({ userId }: { userId: string }) {
           }}
         />
       ) : (
-        <button className="full-width" onClick={() => setShowForm(true)}>
-          + Agregar comida
+        <button className="full-width icon-label" onClick={() => setShowForm(true)}>
+          <IconPlus width={18} height={18} /> Agregar comida
         </button>
       )}
 
@@ -126,11 +127,15 @@ export default function Dashboard({ userId }: { userId: string }) {
               </div>
             </div>
             <div className="button-row">
-              <button className="small" onClick={() => setEditing(m)}>
-                ✏️
+              <button className="icon-btn" aria-label="Editar comida" onClick={() => setEditing(m)}>
+                <IconPencil width={17} height={17} />
               </button>
-              <button className="small" onClick={() => deleteMeal(m.id)}>
-                🗑️
+              <button
+                className="icon-btn danger"
+                aria-label="Eliminar comida"
+                onClick={() => deleteMeal(m.id)}
+              >
+                <IconTrash width={17} height={17} />
               </button>
             </div>
           </li>

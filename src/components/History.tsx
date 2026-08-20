@@ -78,7 +78,7 @@ export default function History({ userId }: { userId: string }) {
               <XAxis dataKey="label" tick={{ fontSize: 11 }} interval="preserveStartEnd" />
               <YAxis tick={{ fontSize: 11 }} />
               <Tooltip />
-              <Bar dataKey="calories" name="kcal" fill="#4CAF50" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="calories" name="kcal" fill="#2D6A4F" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
