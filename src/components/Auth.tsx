@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
+import ThemeToggle from './ThemeToggle'
 import { LogoMark } from './icons'
 
 export default function Auth() {
@@ -31,6 +32,9 @@ export default function Auth() {
 
   return (
     <div className="centered">
+      <div className="auth-theme">
+        <ThemeToggle />
+      </div>
       <form className="card auth-form" onSubmit={handleSubmit}>
         <div className="auth-brand">
           <LogoMark size={52} />

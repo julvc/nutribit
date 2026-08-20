@@ -3,8 +3,10 @@
   margin: 0;
 }
 
+/* El tema lo fija data-theme en <html> (script inline de index.html + ThemeToggle).
+   Sin elección guardada arranca con el del sistema. */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --pine: #2d6a4f;
   --pine-dark: #1b4332;
   /* texto verde legible sobre el fondo del tema */
@@ -31,26 +33,25 @@
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --pine: #3f8a68;
-    --pine-ink: #8fc7aa;
-    --pine-tint: rgba(63, 138, 104, 0.18);
-    --terra: #d4705a;
-    --paper: #151815;
-    --card: #1d211d;
-    --input-bg: #262b26;
-    --ink: #e9e7e0;
-    --ink-70: rgba(233, 231, 224, 0.7);
-    --ink-45: rgba(233, 231, 224, 0.45);
-    --border: #2c312c;
-    --ring-track: #2c312c;
-    --glass: rgba(21, 24, 21, 0.85);
-    --glass-tabs: rgba(29, 33, 29, 0.92);
-    --halo: #1a211c;
-    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.25);
-    --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.4);
-  }
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --pine: #3f8a68;
+  --pine-ink: #8fc7aa;
+  --pine-tint: rgba(63, 138, 104, 0.18);
+  --terra: #d4705a;
+  --paper: #151815;
+  --card: #1d211d;
+  --input-bg: #262b26;
+  --ink: #e9e7e0;
+  --ink-70: rgba(233, 231, 224, 0.7);
+  --ink-45: rgba(233, 231, 224, 0.45);
+  --border: #2c312c;
+  --ring-track: #2c312c;
+  --glass: rgba(21, 24, 21, 0.85);
+  --glass-tabs: rgba(29, 33, 29, 0.92);
+  --halo: #1a211c;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.25);
+  --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.4);
 }
 
 body {
@@ -125,6 +126,18 @@ section.card:nth-of-type(5) {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth-theme {
+  position: fixed;
+  top: calc(14px + env(safe-area-inset-top));
+  right: 16px;
 }
 
 .brand h1 {
