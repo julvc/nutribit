@@ -19,7 +19,8 @@
   --input-bg: #ffffff;
   --ink: #23281f;
   --ink-70: rgba(35, 40, 31, 0.68);
-  --ink-45: rgba(35, 40, 31, 0.45);
+  /* alfa subida a 0.65 (no 0.45): a 0.68rem es texto pequeño, AA exige 4.5:1 */
+  --ink-45: rgba(35, 40, 31, 0.65);
   --border: #e7e4dc;
   --ring-track: #ecebe5;
   --glass: rgba(246, 244, 239, 0.85);
@@ -44,7 +45,7 @@
   --input-bg: #262b26;
   --ink: #e9e7e0;
   --ink-70: rgba(233, 231, 224, 0.7);
-  --ink-45: rgba(233, 231, 224, 0.45);
+  --ink-45: rgba(233, 231, 224, 0.56);
   --border: #2c312c;
   --ring-track: #2c312c;
   --glass: rgba(21, 24, 21, 0.85);
