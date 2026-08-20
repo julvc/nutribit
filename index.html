@@ -4,8 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content="NutriBit - Rastreador de calorías y peso, gratuito y privado" />
-    <meta name="theme-color" content="#2D6A4F" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#151815" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#2D6A4F" />
+    <script>
+      // Aplica el tema antes de pintar: elección guardada, o la del sistema.
+      // Si el navegador bloquea localStorage, este script aborta y queda el tema claro.
+      var t =
+        localStorage.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+      document.documentElement.dataset.theme = t
+      document.head.querySelector('meta[name=theme-color]').content =
+        t === 'dark' ? '#151815' : '#2D6A4F'
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

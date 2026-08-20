@@ -3,6 +3,7 @@ import type { Session } from '@supabase/supabase-js'
 import { configOk, supabase } from './lib/supabase'
 import Auth from './components/Auth'
 import Dashboard from './components/Dashboard'
+import ThemeToggle from './components/ThemeToggle'
 import { IconBody, IconChart, IconLogout, IconPlate, LogoMark } from './components/icons'
 
 // recharts (~500KB min) solo se descarga al abrir estas pestañas
@@ -49,9 +50,12 @@ export default function App() {
           <LogoMark size={30} />
           <h1>NutriBit</h1>
         </div>
-        <button className="link icon-label" onClick={() => supabase.auth.signOut()}>
-          <IconLogout width={18} height={18} /> Salir
-        </button>
+        <div className="header-actions">
+          <ThemeToggle />
+          <button className="link icon-label" onClick={() => supabase.auth.signOut()}>
+            <IconLogout width={18} height={18} /> Salir
+          </button>
+        </div>
       </header>
 
       <main className="app-main">
