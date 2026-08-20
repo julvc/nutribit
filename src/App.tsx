@@ -67,13 +67,25 @@ export default function App() {
       </main>
 
       <nav className="tabs">
-        <button className={tab === 'hoy' ? 'active' : ''} onClick={() => setTab('hoy')}>
+        <button
+          className={tab === 'hoy' ? 'active' : ''}
+          aria-current={tab === 'hoy' ? 'page' : undefined}
+          onClick={() => setTab('hoy')}
+        >
           <IconPlate /> Hoy
         </button>
-        <button className={tab === 'historial' ? 'active' : ''} onClick={() => setTab('historial')}>
+        <button
+          className={tab === 'historial' ? 'active' : ''}
+          aria-current={tab === 'historial' ? 'page' : undefined}
+          onClick={() => setTab('historial')}
+        >
           <IconChart /> Historial
         </button>
-        <button className={tab === 'peso' ? 'active' : ''} onClick={() => setTab('peso')}>
+        <button
+          className={tab === 'peso' ? 'active' : ''}
+          aria-current={tab === 'peso' ? 'page' : undefined}
+          onClick={() => setTab('peso')}
+        >
           <IconBody /> Peso
         </button>
       </nav>

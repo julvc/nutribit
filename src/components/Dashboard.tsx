@@ -140,7 +140,12 @@ export default function Dashboard({ userId }: { userId: string }) {
         </button>
         <label className="date-label">
           {dateLabel}
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+          <input
+            type="date"
+            aria-label="Elegir fecha"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
         </label>
         <button aria-label="Día siguiente" onClick={() => setDate(shiftDate(date, 1))}>
           ›
