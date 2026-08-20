@@ -568,6 +568,48 @@ button.full-width {
   gap: 8px;
 }
 
+.food-search {
+  position: relative;
+}
+
+.food-suggestions {
+  position: absolute;
+  z-index: 5;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  list-style: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-input);
+  box-shadow: var(--shadow-float);
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.food-suggestions li + li {
+  border-top: 1px solid var(--border);
+}
+
+.food-suggestions button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border-radius: 0;
+  padding: 8px 12px;
+  color: var(--ink);
+  font-weight: 400;
+  text-align: left;
+}
+
+.food-suggestions-credit {
+  padding: 4px 12px;
+}
+
 .button-row {
   display: flex;
   gap: 8px;
