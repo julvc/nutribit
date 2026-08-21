@@ -1,5 +1,6 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
+import { searchFoods, type FoodResult } from '../lib/openFoodFacts'
 import { MEAL_TYPE_LABELS, type Meal, type MealInput, type MealType } from '../types'
 
 interface Props {
@@ -20,6 +21,39 @@ export default function MealForm({ userId, date, meal, defaultType, onSaved, onC
   const [mealType, setMealType] = useState<MealType>(meal?.meal_type ?? defaultType ?? 'breakfast')
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
+  const [suggestions, setSuggestions] = useState<FoodResult[]>([])
+  const [showSuggestions, setShowSuggestions] = useState(false)
+  const searchId = useRef(0)
+
+  // Búsqueda de alimentos (ejemplo con Open Food Facts, ver openFoodFacts.ts).
+  // Solo al agregar: editar una comida ya guardada no necesita sugerencias.
+  useEffect(() => {
+    if (meal || name.trim().length < 2) {
+      setSuggestions([])
+      return
+    }
+    const id = ++searchId.current
+    const timer = setTimeout(() => {
+      searchFoods(name.trim())
+        .then((results) => {
+          if (id === searchId.current) setSuggestions(results)
+        })
+        .catch(() => {
+          if (id === searchId.current) setSuggestions([])
+        })
+    }, 350)
+    return () => clearTimeout(timer)
+  }, [name, meal])
+
+  function pickSuggestion(food: FoodResult) {
+    setName(food.name)
+    setCalories(String(Math.round(food.caloriesPer100g)))
+    setProtein(String(Math.round(food.proteinPer100g)))
+    setCarbs(String(Math.round(food.carbsPer100g)))
+    setFat(String(Math.round(food.fatPer100g)))
+    setSuggestions([])
+    setShowSuggestions(false)
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -46,9 +80,31 @@ export default function MealForm({ userId, date, meal, defaultType, onSaved, onC
   return (
     <form className="card meal-form" onSubmit={handleSubmit}>
       <h3>{meal ? 'Editar comida' : 'Agregar comida'}</h3>
-      <label>
+      <label className="food-search">
         Nombre
-        <input value={name} onChange={(e) => setName(e.target.value)} required maxLength={255} />
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onFocus={() => setShowSuggestions(true)}
+          onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+          required
+          maxLength={255}
+          autoComplete="off"
+        />
+        {showSuggestions && suggestions.length > 0 && (
+          <ul className="food-suggestions">
+            {suggestions.map((food, i) => (
+              <li key={i}>
+                <button type="button" onMouseDown={() => pickSuggestion(food)}>
+                  <span>{food.name}</span>
+                  <span className="muted small">{Math.round(food.caloriesPer100g)} kcal/100g</span>
+                </button>
+              </li>
+            ))}
+            <li className="food-suggestions-credit muted small">Datos: Open Food Facts</li>
+          </ul>
+        )}
+        {!meal && <span className="muted small">Escribe 2+ letras para buscar (valores por 100 g)</span>}
       </label>
       <label>
         Tipo

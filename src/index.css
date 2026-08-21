@@ -3,8 +3,10 @@
   margin: 0;
 }
 
+/* El tema lo fija data-theme en <html> (script inline de index.html + ThemeToggle).
+   Sin elección guardada arranca con el del sistema. */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --pine: #2d6a4f;
   --pine-dark: #1b4332;
   /* texto verde legible sobre el fondo del tema */
@@ -17,7 +19,8 @@
   --input-bg: #ffffff;
   --ink: #23281f;
   --ink-70: rgba(35, 40, 31, 0.68);
-  --ink-45: rgba(35, 40, 31, 0.45);
+  /* alfa subida a 0.65 (no 0.45): a 0.68rem es texto pequeño, AA exige 4.5:1 */
+  --ink-45: rgba(35, 40, 31, 0.65);
   --border: #e7e4dc;
   --ring-track: #ecebe5;
   --glass: rgba(246, 244, 239, 0.85);
@@ -31,26 +34,25 @@
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --pine: #3f8a68;
-    --pine-ink: #8fc7aa;
-    --pine-tint: rgba(63, 138, 104, 0.18);
-    --terra: #d4705a;
-    --paper: #151815;
-    --card: #1d211d;
-    --input-bg: #262b26;
-    --ink: #e9e7e0;
-    --ink-70: rgba(233, 231, 224, 0.7);
-    --ink-45: rgba(233, 231, 224, 0.45);
-    --border: #2c312c;
-    --ring-track: #2c312c;
-    --glass: rgba(21, 24, 21, 0.85);
-    --glass-tabs: rgba(29, 33, 29, 0.92);
-    --halo: #1a211c;
-    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.25);
-    --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.4);
-  }
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --pine: #3f8a68;
+  --pine-ink: #8fc7aa;
+  --pine-tint: rgba(63, 138, 104, 0.18);
+  --terra: #d4705a;
+  --paper: #151815;
+  --card: #1d211d;
+  --input-bg: #262b26;
+  --ink: #e9e7e0;
+  --ink-70: rgba(233, 231, 224, 0.7);
+  --ink-45: rgba(233, 231, 224, 0.56);
+  --border: #2c312c;
+  --ring-track: #2c312c;
+  --glass: rgba(21, 24, 21, 0.85);
+  --glass-tabs: rgba(29, 33, 29, 0.92);
+  --halo: #1a211c;
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.25);
+  --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.4);
 }
 
 body {
@@ -125,6 +127,18 @@ section.card:nth-of-type(5) {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth-theme {
+  position: fixed;
+  top: calc(14px + env(safe-area-inset-top));
+  right: 16px;
 }
 
 .brand h1 {
@@ -552,6 +566,48 @@ button.full-width {
 .macro-row {
   display: flex;
   gap: 8px;
+}
+
+.food-search {
+  position: relative;
+}
+
+.food-suggestions {
+  position: absolute;
+  z-index: 5;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  list-style: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-input);
+  box-shadow: var(--shadow-float);
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.food-suggestions li + li {
+  border-top: 1px solid var(--border);
+}
+
+.food-suggestions button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border-radius: 0;
+  padding: 8px 12px;
+  color: var(--ink);
+  font-weight: 400;
+  text-align: left;
+}
+
+.food-suggestions-credit {
+  padding: 4px 12px;
 }
 
 .button-row {

@@ -3,6 +3,7 @@ import type { Session } from '@supabase/supabase-js'
 import { configOk, supabase } from './lib/supabase'
 import Auth from './components/Auth'
 import Dashboard from './components/Dashboard'
+import ThemeToggle from './components/ThemeToggle'
 import { IconBody, IconChart, IconLogout, IconPlate, LogoMark } from './components/icons'
 
 // recharts (~500KB min) solo se descarga al abrir estas pestañas
@@ -49,9 +50,12 @@ export default function App() {
           <LogoMark size={30} />
           <h1>NutriBit</h1>
         </div>
-        <button className="link icon-label" onClick={() => supabase.auth.signOut()}>
-          <IconLogout width={18} height={18} /> Salir
-        </button>
+        <div className="header-actions">
+          <ThemeToggle />
+          <button className="link icon-label" onClick={() => supabase.auth.signOut()}>
+            <IconLogout width={18} height={18} /> Salir
+          </button>
+        </div>
       </header>
 
       <main className="app-main">
@@ -63,13 +67,25 @@ export default function App() {
       </main>
 
       <nav className="tabs">
-        <button className={tab === 'hoy' ? 'active' : ''} onClick={() => setTab('hoy')}>
+        <button
+          className={tab === 'hoy' ? 'active' : ''}
+          aria-current={tab === 'hoy' ? 'page' : undefined}
+          onClick={() => setTab('hoy')}
+        >
           <IconPlate /> Hoy
         </button>
-        <button className={tab === 'historial' ? 'active' : ''} onClick={() => setTab('historial')}>
+        <button
+          className={tab === 'historial' ? 'active' : ''}
+          aria-current={tab === 'historial' ? 'page' : undefined}
+          onClick={() => setTab('historial')}
+        >
           <IconChart /> Historial
         </button>
-        <button className={tab === 'peso' ? 'active' : ''} onClick={() => setTab('peso')}>
+        <button
+          className={tab === 'peso' ? 'active' : ''}
+          aria-current={tab === 'peso' ? 'page' : undefined}
+          onClick={() => setTab('peso')}
+        >
           <IconBody /> Peso
         </button>
       </nav>
